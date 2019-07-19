@@ -17,7 +17,7 @@ var Terminal = (function () {
 	}
 
 	var firstPrompt = true;
-	promptInput = function (terminalObj, message, PROMPT_TYPE, callback) {
+	var promptInput = function (terminalObj, message, PROMPT_TYPE, callback) {
 		var shouldDisplayInput = (PROMPT_TYPE === PROMPT_INPUT)
 		var inputField = document.createElement('input')
 
@@ -28,7 +28,7 @@ var Terminal = (function () {
 		inputField.style.opacity = '0'
 		inputField.style.fontSize = '0.2em'
 
-		terminalObj._inputLine.textContent = ''
+		terminalObj._inputLine.textContent = terminalObj.prmpt + ''
 		terminalObj._input.style.display = 'block'
 		terminalObj.html.appendChild(inputField)
 		fireCursorInterval(inputField, terminalObj)
@@ -49,7 +49,11 @@ var Terminal = (function () {
 		}
 
 		inputField.onkeydown = function (e) {
-			if (e.which === 37 || e.which === 39 || e.which === 38 || e.which === 40 || e.which === 9) {
+			if(inputField.value === terminalObj.prmpt && (e.which === 8 || e.which === 46)){
+				e.preventDefault();
+				return;
+			}
+			else if (e.which === 37 || e.which === 39 || e.which === 38 || e.which === 40 || e.which === 9) {
 				e.preventDefault()
 			} else if (shouldDisplayInput && e.which !== 13) {
 				setTimeout(function () {
@@ -87,7 +91,17 @@ var Terminal = (function () {
 			//terminalBeep.innerHTML = source + 'mp3" type="audio/mpeg">' + source + 'ogg" type="audio/ogg">'
 			//terminalBeep.volume = 0.05
 		//}
-
+		this.install = function(obj){
+			switch(obj.type){
+				case 'shell':
+					this.shells.push(obj);
+					break;
+				case 'interpreter':
+					this.interpreters.push(obj)
+					break;
+			}
+		}
+		this.prmpt = 'SQL > ';
 		this.html = document.createElement('div')
 		this.html.className = 'Terminal'
 		if (typeof(id) === 'string') { this.html.id = id }
