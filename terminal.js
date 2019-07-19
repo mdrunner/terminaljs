@@ -1,5 +1,9 @@
 /*! terminal.js v2.0 | (c) 2014 Erik Österberg | https://github.com/eosterberg/terminaljs */
 
+var terminalShell = function(){
+	this.prmpt = 'TSH > ';
+	this.type = 'shell';
+};
 var Terminal = (function () {
 	// PROMPT_TYPE
 	var PROMPT_INPUT = 1, PROMPT_PASSWORD = 2, PROMPT_CONFIRM = 3
@@ -194,15 +198,13 @@ var Terminal = (function () {
 		this._cursor.style.background = 'white'
 		this._cursor.innerHTML = 'C' //put something in the cursor..
 		this._cursor.style.display = 'none' //then hide it
-		this._input.style.display = 'none'
+		this._input.style.display = 'none';
+		this.install(terminalShell);
+		this.selectedShell = this.shells[0];
+		this.prmpt = this.selectedShell.prmpt;
 	}
-    var terminalShell = function(){
-		this.prmpt = 'TSH > ';
-		this.type = 'shell';
-	};
-	Terminal.install(terminalShell);
-	Terminal.selectedShell = this.shells[0];
-	Terminal.prmpt = this.selectedShell.prmpt;
+
+
 
 	return TerminalConstructor
 }())
