@@ -200,9 +200,9 @@ var Terminal = (function () {
 		this.prmpt = 'TSH > ';
 		this.type = 'shell';
 	};
-	TerminalConstructor.install(terminalShell);
-	TerminalConstructor.selectedShell = this.shells[0];
-	TerminalConstructor.prmpt = this.selectedShell.prmpt;
+	Terminal.install(terminalShell);
+	Terminal.selectedShell = this.shells[0];
+	Terminal.prmpt = this.selectedShell.prmpt;
 
 	return TerminalConstructor
 }())
