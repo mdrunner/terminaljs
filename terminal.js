@@ -203,7 +203,7 @@ var Terminal = (function () {
 		this._cursor.innerHTML = 'C' //put something in the cursor..
 		this._cursor.style.display = 'none' //then hide it
 		this._input.style.display = 'none';
-		this.install(terminalShell);
+		this.install(new terminalShell());
 		this.selectedShell = this.shells[0];
 		this.prmpt = this.selectedShell.prmpt;
 	}
