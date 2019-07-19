@@ -105,7 +105,8 @@ var Terminal = (function () {
 		//}
 		this.shells = [];
 		this.interpreters = [];
-		this.install = function(obj){
+		this.install = function(cl){
+			var obj = new cl();
 			console.log(obj,obj.type);
 			switch(obj.type){
 				case 'shell':
@@ -210,7 +211,7 @@ var Terminal = (function () {
 		this._cursor.innerHTML = 'C' //put something in the cursor..
 		this._cursor.style.display = 'none' //then hide it
 		this._input.style.display = 'none';
-		this.install(new terminalShell());
+		this.install(terminalShell);
 		this.selectedShell = this.shells[0];
 		this.prmpt = this.selectedShell.prmpt;
 	}
