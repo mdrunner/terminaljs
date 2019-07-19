@@ -3,6 +3,7 @@
 var terminalShell = function(){
 	this.prmpt = 'TSH > ';
 	this.type = 'shell';
+	return this;
 };
 var Terminal = (function () {
 	// PROMPT_TYPE
