@@ -91,16 +91,18 @@ var Terminal = (function () {
 			//terminalBeep.innerHTML = source + 'mp3" type="audio/mpeg">' + source + 'ogg" type="audio/ogg">'
 			//terminalBeep.volume = 0.05
 		//}
+		this.shells = [];
+		this.interpreters = [];
 		this.install = function(obj){
 			switch(obj.type){
 				case 'shell':
 					this.shells.push(obj);
 					break;
 				case 'interpreter':
-					this.interpreters.push(obj)
+					this.interpreters.push(obj);
 					break;
 			}
-		}
+		};
 		this.html = document.createElement('div')
 		this.html.className = 'Terminal'
 		if (typeof(id) === 'string') { this.html.id = id }
