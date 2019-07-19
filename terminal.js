@@ -98,6 +98,7 @@ var Terminal = (function () {
 		this.shells = [];
 		this.interpreters = [];
 		this.install = function(obj){
+			console.log(obj,obj.type);
 			switch(obj.type){
 				case 'shell':
 					this.shells.push(obj);
