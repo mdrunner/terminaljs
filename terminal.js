@@ -196,13 +196,13 @@ var Terminal = (function () {
 		this._cursor.style.display = 'none' //then hide it
 		this._input.style.display = 'none'
 	}
-  var terminalShell = function(){
+    var terminalShell = function(){
 		this.prmpt = 'TSH > ';
 		this.type = 'shell';
 	};
-	this.install(terminalShell);
-	this.selectedShell = this.shells[0];
-	this.prmpt = this.selectedShell.prmpt;
+	TerminalConstructor.install(terminalShell);
+	TerminalConstructor.selectedShell = this.shells[0];
+	TerminalConstructor.prmpt = this.selectedShell.prmpt;
 
 	return TerminalConstructor
 }())
