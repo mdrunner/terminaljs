@@ -3,6 +3,13 @@
 var terminalShell = function(){
 	this.prmpt = 'TSH > ';
 	this.type = 'shell';
+	this.history = [];
+	this.commands = {
+		quit: function(){},
+		history: function(){
+			return this.history;
+		}
+	};
 	return this;
 };
 var Terminal = (function () {
