@@ -101,7 +101,6 @@ var Terminal = (function () {
 					break;
 			}
 		}
-		this.prmpt = 'SQL > ';
 		this.html = document.createElement('div')
 		this.html.className = 'Terminal'
 		if (typeof(id) === 'string') { this.html.id = id }
@@ -195,6 +194,13 @@ var Terminal = (function () {
 		this._cursor.style.display = 'none' //then hide it
 		this._input.style.display = 'none'
 	}
+  var terminalShell = function(){
+		this.prmpt = 'TSH > ';
+		this.type = 'shell';
+	};
+	this.install(terminalShell);
+	this.selectedShell = this.shells[0];
+	this.prmpt = this.selectedShell.prmpt;
 
 	return TerminalConstructor
 }())
