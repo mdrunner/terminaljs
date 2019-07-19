@@ -101,6 +101,8 @@ var Terminal = (function () {
 			switch(obj.type){
 				case 'shell':
 					this.shells.push(obj);
+					console.log(this);
+					console.log(this.shells);
 					break;
 				case 'interpreter':
 					this.interpreters.push(obj);
@@ -203,8 +205,5 @@ var Terminal = (function () {
 		this.selectedShell = this.shells[0];
 		this.prmpt = this.selectedShell.prmpt;
 	}
-
-
-
 	return TerminalConstructor
 }())
