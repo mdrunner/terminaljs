@@ -172,7 +172,7 @@ var Terminal = (function () {
 		this.sleep = function (milliseconds, callback) {
 			setTimeout(callback, milliseconds)
 		}
-
+		/* TODO outsource to UI-editor */
 		this.setTextSize = function (size) {
 			this._output.style.fontSize = size
 			this._input.style.fontSize = size
