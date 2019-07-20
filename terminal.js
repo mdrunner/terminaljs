@@ -1,18 +1,27 @@
 /*! terminal.js v2.0 | (c) 2014 Erik Österberg | https://github.com/eosterberg/terminaljs */
-
-var terminalShell = function(){
-	this.prmpt = 'JSTSH > ';
-	this.name = 'jstsh';
-	this.type = 'shell';
-	this.history = [];
-	this.commands = {
-		quit: function(){},
-		history: function(){
-			return this.history;
-		}
-	};
-	return this;
-};
+class terminaljsShell {
+	constructor(){
+		this.prmpt = 'tjsSH > ';
+		this.name = 'terminaljsShell tjsSH';
+		this.type = 'shell';
+		this.description = 'The default shell for terminaljs.';
+		this.history = [];
+		this.state = {};
+		this.commands = {
+			quit: function(){},
+			history: function(){
+				return this.history;
+			},
+			help: function(){
+			},
+			contextHelp: function(topic, context){
+			}
+		};
+	}
+	grep(){
+		return 0;
+	}
+}
 var Terminal = (function () {
 	// PROMPT_TYPE
 	var PROMPT_INPUT = 1, PROMPT_PASSWORD = 2, PROMPT_CONFIRM = 3
@@ -185,7 +194,7 @@ var Terminal = (function () {
 		this.setHeight = function (height) {
 			this.html.style.height = height
 		}
-
+		/* TODO solve by css */
 		this.blinkingCursor = function (bool) {
 			bool = bool.toString().toUpperCase()
 			this._shouldBlinkCursor = (bool === 'TRUE' || bool === '1' || bool === 'YES')
@@ -202,17 +211,17 @@ var Terminal = (function () {
 		this.setTextSize('1em')
 		this.setWidth('100%')
 		this.setHeight('100%')
-
 		this.html.style.fontFamily = 'Monaco, Courier'
 		this.html.style.margin = '0'
 		this._innerWindow.style.padding = '10px'
 		this._input.style.margin = '0'
 		this._output.style.margin = '0'
 		this._cursor.style.background = 'white'
-		this._cursor.innerHTML = 'C' //put something in the cursor..
-		this._cursor.style.display = 'none' //then hide it
+		this._cursor.innerHTML = 'C'
+		this._cursor.style.display = 'none'
 		this._input.style.display = 'none';
-		this.install(terminalShell);
+
+		this.install(terminaljsShell);
 		this.selectedShell = this.shells[0];
 		this.prmpt = this.selectedShell.prmpt;
 	}
