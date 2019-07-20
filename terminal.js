@@ -39,20 +39,7 @@ class Terminal {
 		//}
 		this.shells = [];
 		this.interpreters = [];
-		this.install = function(cl){
-			var obj = new cl();
-			console.log(obj,obj.type);
-			switch(obj.type){
-				case 'shell':
-					this.shells.push(obj);
-					//console.log(this);
-					//console.log(this.shells);
-					break;
-				case 'interpreter':
-					this.interpreters.push(obj);
-					break;
-			}
-		};
+
 		this.html = document.createElement('div')
 		this.html.className = 'Terminal'
 		if (typeof(id) === 'string') { this.html.id = id }
@@ -150,6 +137,18 @@ class Terminal {
 		this.prmpt = this.selectedShell.prmpt;
 	}
 
+	install(cl){
+		var obj = new cl();
+		console.log(obj,obj.type);
+		switch(obj.type){
+			case 'shell':
+				this.shells.push(obj);
+				break;
+			case 'interpreter':
+				this.interpreters.push(obj);
+				break;
+		}
+	}
 
 	fireCursorInterval(inputField, terminalObj) {
 		var cursor = terminalObj._cursor
@@ -209,6 +208,7 @@ class Terminal {
 			}
 		}
 		inputField.onkeyup = function (e) {
+			console.log(e);
 			if (PROMPT_TYPE === this.PROMPT_CONFIRM || e.which === 13) {
 				terminalObj._input.style.display = 'none'
 				var inputValue = inputField.value
