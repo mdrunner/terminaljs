@@ -22,91 +22,15 @@ class terminaljsShell {
 		return 0;
 	}
 }
-var Terminal = (function () {
-	// PROMPT_TYPE
-	var PROMPT_INPUT = 1, PROMPT_PASSWORD = 2, PROMPT_CONFIRM = 3
-
-	var fireCursorInterval = function (inputField, terminalObj) {
-		var cursor = terminalObj._cursor
-		setTimeout(function () {
-			if (inputField.parentElement && terminalObj._shouldBlinkCursor) {
-				cursor.style.visibility = cursor.style.visibility === 'visible' ? 'hidden' : 'visible'
-				fireCursorInterval(inputField, terminalObj)
-			} else {
-				cursor.style.visibility = 'visible'
-			}
-		}, 500)
-	}
-
-	var firstPrompt = true;
-	var promptInput = function (terminalObj, message, PROMPT_TYPE, callback) {
-		var shouldDisplayInput = (PROMPT_TYPE === PROMPT_INPUT)
-		var inputField = document.createElement('input')
-
-		inputField.style.position = 'absolute'
-		inputField.style.zIndex = '-100'
-		inputField.style.outline = 'none'
-		inputField.style.border = 'none'
-		inputField.style.opacity = '0'
-		inputField.style.fontSize = '0.2em'
-
-		terminalObj._inputLine.textContent = terminalObj.prmpt + ''
-		terminalObj._input.style.display = 'block'
-		terminalObj.html.appendChild(inputField)
-		fireCursorInterval(inputField, terminalObj)
-
-		if (message.length) terminalObj.print(PROMPT_TYPE === PROMPT_CONFIRM ? message + ' (y/n)' : message)
-
-		inputField.onblur = function () {
-			terminalObj._cursor.style.display = 'none'
-		}
-
-		inputField.onfocus = function () {
-			inputField.value = terminalObj._inputLine.textContent
-			terminalObj._cursor.style.display = 'inline'
-		}
-
-		terminalObj.html.onclick = function () {
-			inputField.focus()
-		}
-
-		inputField.onkeydown = function (e) {
-			if(inputField.value === terminalObj.prmpt && (e.which === 8 || e.which === 46)){
-				e.preventDefault();
-				return;
-			}
-			else if (e.which === 37 || e.which === 39 || e.which === 38 || e.which === 40 || e.which === 9) {
-				e.preventDefault()
-			} else if (shouldDisplayInput && e.which !== 13) {
-				setTimeout(function () {
-					terminalObj._inputLine.textContent = inputField.value
-				}, 1)
-			}
-		}
-		inputField.onkeyup = function (e) {
-			if (PROMPT_TYPE === PROMPT_CONFIRM || e.which === 13) {
-				terminalObj._input.style.display = 'none'
-				var inputValue = inputField.value
-				if (shouldDisplayInput) terminalObj.print(inputValue)
-				terminalObj.html.removeChild(inputField)
-				if (typeof(callback) === 'function') {
-					if (PROMPT_TYPE === PROMPT_CONFIRM) {
-						callback(inputValue.toUpperCase()[0] === 'Y' ? true : false)
-					} else callback(inputValue)
-				}
-			}
-		}
-		if (firstPrompt) {
-			firstPrompt = false
-			setTimeout(function () { inputField.focus()	}, 50)
-		} else {
-			inputField.focus()
-		}
-	}
+class Terminal {
 
 	//var terminalBeep
-
-	var TerminalConstructor = function (id) {
+	constructor(id) {
+		this.firstPrompt = true;
+		// PROMPT_TYPE
+		this.PROMPT_INPUT = 1; 
+		this.PROMPT_PASSWORD = 2;
+		this.PROMPT_CONFIRM = 3;
 		//if (!terminalBeep) {
 			//terminalBeep = document.createElement('audio')
 			//var source = '<source src="http://www.erikosterberg.com/terminaljs/beep.'
@@ -154,15 +78,15 @@ var Terminal = (function () {
 		}
 
 		this.input = function (message, callback) {
-			promptInput(this, message, PROMPT_INPUT, callback)
+			this.promptInput(this, message, this.PROMPT_INPUT, callback)
 		}
 
 		this.password = function (message, callback) {
-			promptInput(this, message, PROMPT_PASSWORD, callback)
+			this.promptInput(this, message, this.PROMPT_PASSWORD, callback)
 		}
 
 		this.confirm = function (message, callback) {
-			promptInput(this, message, PROMPT_CONFIRM, callback)
+			this.promptInput(this, message, this.PROMPT_CONFIRM, callback)
 		}
 
 		this.clear = function () {
@@ -225,5 +149,84 @@ var Terminal = (function () {
 		this.selectedShell = this.shells[0];
 		this.prmpt = this.selectedShell.prmpt;
 	}
-	return TerminalConstructor
-}())
+
+
+	fireCursorInterval(inputField, terminalObj) {
+		var cursor = terminalObj._cursor
+		setTimeout(function () {
+			if (inputField.parentElement && terminalObj._shouldBlinkCursor) {
+				cursor.style.visibility = cursor.style.visibility === 'visible' ? 'hidden' : 'visible'
+				terminalObj.fireCursorInterval(inputField, terminalObj)
+			} else {
+				cursor.style.visibility = 'visible'
+			}
+		}, 500)
+	}
+
+
+	promptInput(terminalObj, message, PROMPT_TYPE, callback) {
+		var shouldDisplayInput = (PROMPT_TYPE === this.PROMPT_INPUT)
+		
+		var inputField = document.createElement('input')
+		inputField.style.position = 'absolute'
+		inputField.style.zIndex = '-100'
+		inputField.style.outline = 'none'
+		inputField.style.border = 'none'
+		inputField.style.opacity = '0'
+		inputField.style.fontSize = '0.2em'
+
+		terminalObj._inputLine.textContent = terminalObj.prmpt + ''
+		terminalObj._input.style.display = 'block'
+		terminalObj.html.appendChild(inputField)
+		this.fireCursorInterval(inputField, terminalObj)
+
+		if (message.length) terminalObj.print(PROMPT_TYPE === this.PROMPT_CONFIRM ? message + ' (y/n)' : message)
+
+		inputField.onblur = function () {
+			terminalObj._cursor.style.display = 'none'
+		}
+
+		inputField.onfocus = function () {
+			inputField.value = terminalObj._inputLine.textContent
+			terminalObj._cursor.style.display = 'inline'
+		}
+
+		terminalObj.html.onclick = function () {
+			inputField.focus()
+		}
+
+		inputField.onkeydown = function (e) {
+			if(inputField.value === terminalObj.prmpt && (e.which === 8 || e.which === 46)){
+				e.preventDefault();
+				return;
+			}
+			else if (e.which === 37 || e.which === 39 || e.which === 38 || e.which === 40 || e.which === 9) {
+				e.preventDefault()
+			} else if (shouldDisplayInput && e.which !== 13) {
+				setTimeout(function () {
+					terminalObj._inputLine.textContent = inputField.value
+				}, 1)
+			}
+		}
+		inputField.onkeyup = function (e) {
+			if (PROMPT_TYPE === this.PROMPT_CONFIRM || e.which === 13) {
+				terminalObj._input.style.display = 'none'
+				var inputValue = inputField.value
+				if (shouldDisplayInput) terminalObj.print(inputValue)
+				terminalObj.html.removeChild(inputField)
+				if (typeof(callback) === 'function') {
+					if (PROMPT_TYPE === this.PROMPT_CONFIRM) {
+						callback(inputValue.toUpperCase()[0] === 'Y' ? true : false)
+					} else callback(inputValue)
+				}
+			}
+		}
+		if (terminalObj.firstPrompt) {
+			terminalObj.firstPrompt = false
+			setTimeout(function () { inputField.focus()	}, 50)
+		} else {
+			inputField.focus()
+		}
+	}
+
+}
