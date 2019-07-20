@@ -1,7 +1,8 @@
 /*! terminal.js v2.0 | (c) 2014 Erik Österberg | https://github.com/eosterberg/terminaljs */
 
 var terminalShell = function(){
-	this.prmpt = 'TSH > ';
+	this.prmpt = 'JSTSH > ';
+	this.name = 'jstsh';
 	this.type = 'shell';
 	this.history = [];
 	this.commands = {
