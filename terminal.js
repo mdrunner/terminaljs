@@ -111,8 +111,8 @@ var Terminal = (function () {
 			switch(obj.type){
 				case 'shell':
 					this.shells.push(obj);
-					console.log(this);
-					console.log(this.shells);
+					//console.log(this);
+					//console.log(this.shells);
 					break;
 				case 'interpreter':
 					this.interpreters.push(obj);
