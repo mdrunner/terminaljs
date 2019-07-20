@@ -1,5 +1,5 @@
 /*! terminal.js v2.0 | (c) 2014 Erik Österberg | https://github.com/eosterberg/terminaljs */
-class terminaljsShell {
+class TerminaljsShell {
 	constructor(){
 		this.prmpt = 'tjsSH > ';
 		this.name = 'terminaljsShell tjsSH';
@@ -21,6 +21,8 @@ class terminaljsShell {
 	grep(){
 		return 0;
 	}
+}
+class UiEditor {
 }
 class Terminal {
 
@@ -132,7 +134,7 @@ class Terminal {
 		this._cursor.style.display = 'none'
 		this._input.style.display = 'none';
 
-		this.install(terminaljsShell);
+		this.install(TerminaljsShell);
 		this.selectedShell = this.shells[0];
 		this.prmpt = this.selectedShell.prmpt;
 	}
