@@ -15,6 +15,8 @@ class TerminaljsShell {
 			help: function(){
 			},
 			contextHelp: function(topic, context){
+			},
+			clear: function(){
 			}
 		};
 	}
@@ -210,7 +212,7 @@ class Terminal {
 			}
 		}
 		inputField.onkeyup = function (e) {
-			console.log(e);
+			//console.log(e);
 			if (PROMPT_TYPE === this.PROMPT_CONFIRM || e.which === 13) {
 				terminalObj._input.style.display = 'none'
 				var inputValue = inputField.value
