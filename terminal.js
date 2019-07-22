@@ -52,6 +52,7 @@ class Terminal {
 		this._output = document.createElement('p')
 		this._inputLine = document.createElement('span') //the span element where the users input is put
 		this._cursor = document.createElement('span')
+		this._cursor.className = 'cursor blink';
 		this._input = document.createElement('p') //the full element administering the user input, including cursor
 
 		this._shouldBlinkCursor = true
@@ -133,8 +134,8 @@ class Terminal {
 		this._output.style.margin = '0'
 		this._cursor.style.background = 'white'
 		this._cursor.innerHTML = 'C'
-		this._cursor.style.display = 'none'
-		this._input.style.display = 'none';
+		//this._cursor.style.display = 'none'
+		//this._input.style.display = 'none';
 
 		this.install(TerminaljsShell);
 		this.selectedShell = this.shells[0];
@@ -156,6 +157,7 @@ class Terminal {
 
 	fireCursorInterval(inputField, terminalObj) {
 		var cursor = terminalObj._cursor
+		/*
 		setTimeout(function () {
 			if (inputField.parentElement && terminalObj._shouldBlinkCursor) {
 				cursor.style.visibility = cursor.style.visibility === 'visible' ? 'hidden' : 'visible'
@@ -164,6 +166,7 @@ class Terminal {
 				cursor.style.visibility = 'visible'
 			}
 		}, 500)
+		*/
 	}
 
 
