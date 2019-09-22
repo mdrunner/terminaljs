@@ -1,10 +1,12 @@
 /*! terminal.js v2.0 | (c) 2014 Erik Österberg | https://github.com/eosterberg/terminaljs */
 class TerminaljsShell {
+	prmpt = 'tjsSH > ';
+	name = 'terminaljsShell tjsSH';
+	type = 'shell';
+	description = 'The default shell for terminaljs.';
+
+
 	constructor(){
-		this.prmpt = 'tjsSH > ';
-		this.name = 'terminaljsShell tjsSH';
-		this.type = 'shell';
-		this.description = 'The default shell for terminaljs.';
 		this.history = [];
 		this.state = {};
 		this.commands = {
@@ -32,7 +34,7 @@ class Terminal {
 	constructor(id) {
 		this.firstPrompt = true;
 		// PROMPT_TYPE
-		this.PROMPT_INPUT = 1; 
+		this.PROMPT_INPUT = 1;
 		this.PROMPT_PASSWORD = 2;
 		this.PROMPT_CONFIRM = 3;
 		//if (!terminalBeep) {
@@ -172,7 +174,7 @@ class Terminal {
 
 	promptInput(terminalObj, message, PROMPT_TYPE, callback) {
 		var shouldDisplayInput = (PROMPT_TYPE === this.PROMPT_INPUT)
-		
+
 		var inputField = document.createElement('input')
 		inputField.style.position = 'absolute'
 		inputField.style.zIndex = '-100'
